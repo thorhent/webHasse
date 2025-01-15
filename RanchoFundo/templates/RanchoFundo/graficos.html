@@ -1,0 +1,278 @@
+{% extends 'RanchoFundo/base.html' %}
+
+{% block content %}
+{% load static %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Gráficos</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+          <li class="breadcrumb-item">Gráficos</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <p></p>
+
+    <section class="section">
+      <div class="row">
+
+        <div class="col-lg-12">
+          <div class="card">  
+            <div class="card-body">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  {% for ano in anos %}
+                  <li><a class="dropdown-item" href="{% url 'graficos' ano %}">{{ ano }}</a></li>
+                  
+                  {% endfor %}
+                </ul>
+              </div>
+
+              <h5 class="card-title">Gráfico de linha</h5>
+              
+              <!-- Line Chart -->
+              <canvas id="lineChart" style="max-height: 300px;"></canvas>
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new Chart(document.querySelector('#lineChart'), {
+                    type: 'line',
+                    data: {
+                      labels: {{dias}},
+                      datasets: [{
+                        label: {{ano}},
+                        data: {{chuvas}},
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                      }]
+                    },
+                    options: {
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                      }
+                    }
+                  });
+                });
+              </script>
+              <!-- End Line CHart -->
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+          <div class="card">
+
+            <div class="card-body">
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  {% for ano in anos %}
+                  <li><a class="dropdown-item" href="{% url 'graficos' ano %}">{{ ano }}</a></li>
+                  
+                  {% endfor %}
+                </ul>
+              </div>
+              <h5 class="card-title">Gráfico de barras (meses)</h5>
+
+              <!-- Bar Chart -->
+              <canvas id="barChart" style="max-height: 300px;"></canvas>
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new Chart(document.querySelector('#barChart'), {
+                    type: 'bar',
+                    data: {
+                      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto','Setembro', 'Outubro', 'Novembro','Dezembro'],
+                      datasets: [{
+                        label: {{ano}},
+                        data: {{lista_meses_chuva}},
+                        backgroundColor: [
+                          'rgba(255, 99, 132, 0.2)',
+                          'rgba(255, 159, 64, 0.2)',
+                          'rgba(255, 205, 86, 0.2)',
+                          'rgba(75, 192, 192, 0.2)',
+                          'rgba(54, 162, 235, 0.2)',
+                          'rgba(153, 102, 255, 0.2)',
+                          'rgba(201, 203, 207, 0.2)'
+                        ],
+                        borderColor: [
+                          'rgb(255, 99, 132)',
+                          'rgb(255, 159, 64)',
+                          'rgb(255, 205, 86)',
+                          'rgb(75, 192, 192)',
+                          'rgb(54, 162, 235)',
+                          'rgb(153, 102, 255)',
+                          'rgb(201, 203, 207)'
+                        ],
+                        borderWidth: 1
+                      }]
+                    },
+                    options: {
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                      }
+                    }
+                  });
+                });
+              </script>
+              <!-- End Bar CHart -->
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              
+              <h5 class="card-title">Gráfico de barras (anos)</h5>
+
+              <!-- Bar Chart -->
+              <canvas id="grafBarAno" style="max-height: 300px;"></canvas>
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new Chart(document.querySelector('#grafBarAno'), {
+                    type: 'bar',
+                    data: {
+                      labels: {{anos}},
+                      datasets: [{
+                        label: '10 últimos anos',
+                        data: {{lista_chuva_anos}},
+                        backgroundColor: [
+                          'rgba(255, 99, 132, 0.2)',
+                          'rgba(255, 159, 64, 0.2)',
+                          'rgba(255, 205, 86, 0.2)',
+                          'rgba(75, 192, 192, 0.2)',
+                          'rgba(54, 162, 235, 0.2)',
+                          'rgba(153, 102, 255, 0.2)',
+                          'rgba(201, 203, 207, 0.2)',
+                          'rgba(201, 203, 207, 0.2)',
+                          'rgba(201, 203, 207, 0.2)',
+                          'rgba(201, 203, 207, 0.2)'
+                          
+                        ],
+                        borderColor: [
+                          'rgb(255, 99, 132)',
+                          'rgb(255, 159, 64)',
+                          'rgb(255, 205, 86)',
+                          'rgb(75, 192, 192)',
+                          'rgb(54, 162, 235)',
+                          'rgb(153, 102, 255)',
+                          'rgb(201, 203, 207)',
+                          'rgb(201, 203, 207)',
+                          'rgb(201, 203, 207)',
+                          'rgb(201, 203, 207)'
+                          
+                        ],
+                        borderWidth: 1
+                      }]
+                    },
+                    options: {
+                      scales: {
+                        y: {
+                          beginAtZero: true
+                        }
+                      }
+                    }
+                  });
+                });
+              </script>
+              <!-- End Bar CHart -->
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Porcentagens (todos os anos)</h5>
+
+              <!-- Pie Chart -->
+              <canvas id="pieChart" style="max-height: 300px;"></canvas>
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new Chart(document.querySelector('#pieChart'), {
+                    type: 'pie',
+                    data: {
+                      labels: [
+                        'Nublado',
+                        'Chuva',
+                        'Sol'
+                      ],
+                      datasets: [{
+                        label: 'Tempo',
+                        data: {{lista_tempo}},
+                        backgroundColor: [
+                          'rgb(104, 104, 106)',
+                          'rgb(54, 162, 235)',
+                          'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                      }]
+                    }
+                  });
+                });
+              </script>
+              <!-- End Pie CHart -->
+
+            </div>
+          </div>
+        </div>
+        <!-- Otro grafico de pizza -->
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Porcentagens (todos os anos)</h5>
+
+              <!-- Pie Chart -->
+              <canvas id="pieChart" style="max-height: 300px;"></canvas>
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  new Chart(document.querySelector('#pieChart'), {
+                    type: 'pie',
+                    data: {
+                      labels: [
+                        'Nublado',
+                        'Chuva',
+                        'Sol'
+                      ],
+                      datasets: [{
+                        label: 'Tempo',
+                        data: {{lista_tempo}},
+                        backgroundColor: [
+                          'rgb(104, 104, 106)',
+                          'rgb(54, 162, 235)',
+                          'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 4
+                      }]
+                    }
+                  });
+                });
+              </script>
+              <!-- End Pie CHart -->
+
+            </div>
+          </div>
+        </div>
+        <!-- fin-->
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+
+
+
+
+{% endblock content %}

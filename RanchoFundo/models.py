@@ -28,9 +28,9 @@ class Clima(models.Model):
 
     
     def __str__(self):
-        return self.tempo + ' para o dia ' + str(self.data) 
+        return self.tempo + ' | ' + str(self.data) 
 
     def __unicode__(self):
-        return self.tempo + 'para o dia' + str(self.data) 
+        return self.tempo + ' | ' + str(self.data) 
 
     
