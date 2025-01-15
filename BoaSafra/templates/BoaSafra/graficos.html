@@ -1,4 +1,4 @@
-{% extends 'RanchoFundo/base.html' %}
+{% extends 'BoaSafra/base.html' %}
 
 {% block content %}
 {% load static %}
@@ -27,7 +27,7 @@
                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                   {% for ano in anos %}
-                  <li><a class="dropdown-item" href="{% url 'graficos' ano %}">{{ ano }}</a></li>
+                  <li><a class="dropdown-item" href="{% url 'graficos' ano 10 %}">{{ ano }}</a></li>
                   
                   {% endfor %}
                 </ul>
@@ -75,12 +75,12 @@
                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                   {% for ano in anos %}
-                  <li><a class="dropdown-item" href="{% url 'graficos' ano %}">{{ ano }}</a></li>
+                  <li><a class="dropdown-item" href="{% url 'graficos' ano 10 %}">{{ ano }}</a></li>
                   
                   {% endfor %}
                 </ul>
               </div>
-              <h5 class="card-title">Gráfico de barras (meses)</h5>
+              <h5 class="card-title">Gráfico de barras<span> | meses</span> </h5>
 
               <!-- Bar Chart -->
               <canvas id="barChart" style="max-height: 300px;"></canvas>
@@ -100,7 +100,12 @@
                           'rgba(75, 192, 192, 0.2)',
                           'rgba(54, 162, 235, 0.2)',
                           'rgba(153, 102, 255, 0.2)',
-                          'rgba(201, 203, 207, 0.2)'
+                          'rgba(201, 203, 207, 0.2)',
+                          'rgba(109, 76, 65, 0.2)',
+                          'rgba(239, 83, 80, 0.2)',
+                          'rgba(57, 73, 171, 0.2)',
+                          'rgba(46, 125, 50, 0.2)',
+                          'rgba(191, 54, 12, 0.2)'
                         ],
                         borderColor: [
                           'rgb(255, 99, 132)',
@@ -109,7 +114,12 @@
                           'rgb(75, 192, 192)',
                           'rgb(54, 162, 235)',
                           'rgb(153, 102, 255)',
-                          'rgb(201, 203, 207)'
+                          'rgb(201, 203, 207)',
+                          'rgba(109, 76, 65)',
+                          'rgba(239, 83, 80)',
+                          'rgba(57, 73, 171)',
+                          'rgba(46, 125, 50)',
+                          'rgba(191, 54, 12)'
                         ],
                         borderWidth: 1
                       }]
@@ -133,8 +143,15 @@
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              
-              <h5 class="card-title">Gráfico de barras (anos)</h5>
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li><a class="dropdown-item" href="{% url 'graficos' ano 10 %}">10 últimos anos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'graficos' ano 20 %}">20 últimos anos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'graficos' ano 30 %}">30 últimos anos</a></li>
+                </ul>
+              </div>
+              <h5 class="card-title">Gráfico de barras<span> | anos</span></h5>
 
               <!-- Bar Chart -->
               <canvas id="grafBarAno" style="max-height: 300px;"></canvas>
@@ -145,7 +162,7 @@
                     data: {
                       labels: {{anos}},
                       datasets: [{
-                        label: '10 últimos anos',
+                        label: {{intervalo}}+' últimos anos',
                         data: {{lista_chuva_anos}},
                         backgroundColor: [
                           'rgba(255, 99, 132, 0.2)',
@@ -154,10 +171,10 @@
                           'rgba(75, 192, 192, 0.2)',
                           'rgba(54, 162, 235, 0.2)',
                           'rgba(153, 102, 255, 0.2)',
-                          'rgba(201, 203, 207, 0.2)',
-                          'rgba(201, 203, 207, 0.2)',
-                          'rgba(201, 203, 207, 0.2)',
-                          'rgba(201, 203, 207, 0.2)'
+                          'rgba(173, 20, 87, 0.2)',
+                          'rgba(78, 52, 46, 0.2)',
+                          'rgba(123, 31, 162, 0.2)',
+                          'rgba(251, 192, 45, 0.2)'
                           
                         ],
                         borderColor: [
@@ -167,10 +184,10 @@
                           'rgb(75, 192, 192)',
                           'rgb(54, 162, 235)',
                           'rgb(153, 102, 255)',
-                          'rgb(201, 203, 207)',
-                          'rgb(201, 203, 207)',
-                          'rgb(201, 203, 207)',
-                          'rgb(201, 203, 207)'
+                          'rgb(173, 20, 87)',
+                          'rgb(78, 52, 46)',
+                          'rgb(123, 31, 162)',
+                          'rgb(251, 192, 45)'
                           
                         ],
                         borderWidth: 1
@@ -195,7 +212,7 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Porcentagens (todos os anos)</h5>
+              <h5 class="card-title">Porcentagens<span> | todos os anos</span> </h5>
 
               <!-- Pie Chart -->
               <canvas id="pieChart" style="max-height: 300px;"></canvas>
@@ -232,13 +249,13 @@
         <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Porcentagens (todos os anos)</h5>
+              <h5 class="card-title">Porcentagens<span> | {{ano}}</span></h5>
 
               <!-- Pie Chart -->
-              <canvas id="pieChart" style="max-height: 300px;"></canvas>
+              <canvas id="pizza" style="max-height: 300px;"></canvas>
               <script>
                 document.addEventListener("DOMContentLoaded", () => {
-                  new Chart(document.querySelector('#pieChart'), {
+                  new Chart(document.querySelector('#pizza'), {
                     type: 'pie',
                     data: {
                       labels: [
@@ -247,8 +264,8 @@
                         'Sol'
                       ],
                       datasets: [{
-                        label: 'Tempo',
-                        data: {{lista_tempo}},
+                        label: 'Tempo anual',
+                        data: {{lista_tempo_ano}},
                         backgroundColor: [
                           'rgb(104, 104, 106)',
                           'rgb(54, 162, 235)',
