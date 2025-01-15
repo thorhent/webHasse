@@ -117,6 +117,7 @@ def graficos(request, ano, intervalo):
     for i in range(3):
         if climas_full:
             lista_tempo[i] = round((lista_tempo[i]/len(climas_full))*100)
+        if climas:    
             lista_tempo_ano[i] = round((lista_tempo_ano[i]/len(climas))*100)
 
     identificador = False

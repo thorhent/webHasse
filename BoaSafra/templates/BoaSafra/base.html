@@ -63,15 +63,6 @@
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
-
-        
-        
-
         <li class="pe-3">
 
           <a href="{% url 'admin:index' %}">
@@ -135,6 +126,19 @@
         </ul>
         {% endif %}
       </li><!-- End Charts Nav -->
+
+
+      <li class="nav-item">
+        
+        <a class="nav-link collapsed" href="{% url 'admin:index' %}">
+          <i class="bi bi-box-arrow-in-right"></i>
+          {% if not user.is_authenticated  %}
+            <span>Login</span>  
+          {% else %}
+            <span>{{ user }}</span>
+          {% endif %}
+        </a>
+      </li><!-- End Login Page Nav -->
     </ul>
 
   </aside><!-- End Sidebar-->
