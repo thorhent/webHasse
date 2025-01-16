@@ -65,6 +65,7 @@ def home(request):
     lista_final = sorted(lista_final, reverse=True)
     
     qtd_anos = len(lista_anos)
+    
 
     identificador = True
     context = {
@@ -88,7 +89,7 @@ def graficos(request, ano, intervalo):
     #climas = dados do ano selecionado
     climas = Clima.objects.filter(data__year=ano)
     #todo banco de dados
-    climas_full = Clima.objects.all()
+    climas_full = Clima.objects.all().order_by('-data')
     
     #definido grafico de linhas por dias e grafico de barra por meses
     chuvas = []
@@ -101,9 +102,14 @@ def graficos(request, ano, intervalo):
 
     #definir quantos anos estão cadastrados. Retorna uma lista com os anos sem repetição
     anos = definir_qtd_anos(climas_full)
+    
     lista_chuva_anos = definir_chuva_anos(anos, climas_full, False)
     
+    #ajustar intervalo de anos para mostrar e filtrar
     intervalo = int(intervalo)
+    qtd_anos = len(anos)
+    
+    
     i = len(lista_chuva_anos)
     while i > intervalo:
         lista_chuva_anos.pop()
@@ -124,13 +130,14 @@ def graficos(request, ano, intervalo):
 
     context = {
         'dias': dias,
-        'anos':anos,
+        'anos':anos,    
         'chuvas': chuvas,
         'ano': ano,
         'lista_tempo': lista_tempo,
         'lista_meses_chuva': lista_meses_chuva,
         'lista_chuva_anos': lista_chuva_anos,
         'intervalo': intervalo,
+        'qtd_anos': qtd_anos,
         'lista_tempo_ano': lista_tempo_ano,
         'identificador': identificador,
     }

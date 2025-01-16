@@ -27,7 +27,7 @@
                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                   {% for ano in anos %}
-                  <li><a class="dropdown-item" href="{% url 'graficos' ano 10 %}">{{ ano }}</a></li>
+                  <li><a class="dropdown-item" href="{% url 'graficos' ano intervalo %}">{{ ano }}</a></li>
                   
                   {% endfor %}
                 </ul>
@@ -75,7 +75,7 @@
                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                   {% for ano in anos %}
-                  <li><a class="dropdown-item" href="{% url 'graficos' ano 10 %}">{{ ano }}</a></li>
+                  <li><a class="dropdown-item" href="{% url 'graficos' ano intervalo %}">{{ ano }}</a></li>
                   
                   {% endfor %}
                 </ul>
@@ -148,7 +148,7 @@
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                   <li><a class="dropdown-item" href="{% url 'graficos' ano 10 %}">10 últimos anos</a></li>
                   <li><a class="dropdown-item" href="{% url 'graficos' ano 20 %}">20 últimos anos</a></li>
-                  <li><a class="dropdown-item" href="{% url 'graficos' ano 30 %}">30 últimos anos</a></li>
+                  <li><a class="dropdown-item" href="{% url 'graficos' ano qtd_anos %}">Todos os anos</a></li>
                 </ul>
               </div>
               <h5 class="card-title">Gráfico de barras<span> | anos</span></h5>
